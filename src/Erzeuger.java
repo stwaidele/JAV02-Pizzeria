@@ -21,9 +21,8 @@ public class Erzeuger extends Thread {
 	
 	public void run() {
 		while (true) {
-			System.out.println("E rein : "+queue.speicher.size());
+			pizzeria.securityCam.log("E", queue.speicher.size());
 			try{queue.speicher.put(1);} catch(InterruptedException e) {};
-			System.out.println("E raus : "+queue.speicher.size());
 			try{Thread.sleep(sek*pizzeria.SLOW_DOWN);} catch(InterruptedException e) {};
 		}
 	}

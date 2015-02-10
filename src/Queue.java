@@ -19,7 +19,10 @@ public class Queue {
 		}
 		return instance;
 	}	
+	// Möglichkeit die GGröße der Queue zu bestimmen/verändern
 	public void setSpeichergroesse(int i) {
+		// Neue Queue mit gewünschter Größe erzeugen & referenzieren
 		speicher = new LinkedBlockingQueue<>(i);
+		// Die alte Queue wird nicht mehr referenziert und per Garbage Collection freigegeben,
 	}
 }

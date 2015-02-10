@@ -21,9 +21,8 @@ public class Verbraucher extends Thread {
 	
 	public void run() {
 		while (true) {
-			System.out.println("V rein : "+queue.speicher.size());
+			pizzeria.securityCam.log("V", queue.speicher.size());
 			try { queue.speicher.take();} catch(InterruptedException e) {};
-			System.out.println("V raus : "+queue.speicher.size());
 			try { Thread.sleep(sek*pizzeria.SLOW_DOWN);} catch(InterruptedException e) {};
 		}
 	}
