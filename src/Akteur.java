@@ -21,7 +21,7 @@ public abstract class Akteur extends Thread {
 	// i == 0 : Jedes Mal eine andere zufällige Wartezeit
 	public Akteur(int i) {
 		sek = i;
-		if(sek==0) {
+		if(i==0) {
 			immerZufall = true;
 		}
 	}
@@ -33,7 +33,7 @@ public abstract class Akteur extends Thread {
 	// Constructor: Vorgegebene Wartezeit & Name
 	public Akteur(String s, int i) {
 		sek = i;
-		if(sek==0) {
+		if(i==0) {
 			immerZufall = true;
 		}
 		meinName = s;
@@ -42,6 +42,7 @@ public abstract class Akteur extends Thread {
 	public void run() {
 		while (true) {
 			// Falls jedes Mal zufällig gewartet werden soll:
+			// Wartezeit bestimmen...
 			if (immerZufall) {
 				sek = 1 + zufall.nextInt(pizzeria.MAX_RANDOM_WAIT-1);
 			}
@@ -50,7 +51,7 @@ public abstract class Akteur extends Thread {
 			// Loggen...
 			pizzeria.securityCam.log(meinName, sek, queue.speicher.size());
 
-			// Handeln
+			// Handeln!
 			aktion();
 		}
 	}

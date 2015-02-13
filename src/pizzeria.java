@@ -1,27 +1,44 @@
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.util.Iterator;
+
+
 public class pizzeria {
 
-	static final long SLOW_DOWN = 1000;
-	static final int QUEUE_SIZE = 150;
+	static final long SLOW_DOWN = 100;
+	static final int QUEUE_SIZE = 5;
 	static final int MAX_RANDOM_WAIT = 50;
-	static final String FILL_LEVEL_FORMAT = "000";
-	static final String WAITED_FOR_FORMAT = "000";
+	static final String FILL_LEVEL_FORMAT = "%1$4s";
+	static final String WAITED_FOR_FORMAT = "%1$3s";
 	
 	public static Security securityCam = new Security(); 
 
 	public static void main(String[] args) {
+		int nv;
+		ArrayList <Verbraucher> v = new ArrayList<Verbraucher>();
+
+		Scanner s = new Scanner(System.in);
+		System.out.print("Wartezeit für Erzeuger? (0 für jedes Mal eine neue zufällige Wartezeit) ");
+		Erzeuger e = new Erzeuger("E ", s.nextInt());
+		
+		System.out.print("Wie viele Verbraucher? ");
+		nv = s.nextInt();
+		for (int i=1; i<=nv; i++) {
+			System.out.print("Wartezeit für Verbraucher " + i + "? (0 für jedes Mal eine neue zufällige Wartezeit) ");
+			v.add(new Verbraucher("V"+i, s.nextInt()));
+		}				
+		s.close();
+		
 		securityCam.log("Pizzeria JAV02 hat geöffnet.");
-		Erzeuger e = new Erzeuger(1);
-		Verbraucher v1 = new Verbraucher(3);
-		//Verbraucher v2 = new Verbraucher(0);
-		//Verbraucher v3 = new Verbraucher(0);		
 
 		Queue queue = Queue.getInstance();
 		queue.setSpeichergroesse(QUEUE_SIZE);
 
 		e.start();
+		Iterator<Verbraucher> it = v.iterator();
+		while(it.hasNext()) {
+			it.next().start();
+		}
 		
-		v1.start();
-		//v2.start();		
-		//v3.start();
 	}
 }
