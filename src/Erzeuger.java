@@ -1,29 +1,25 @@
-import java.util.Random;
-
-public class Erzeuger extends Thread {
-	
-	// Wartezeit zwischen dem Erzeugen
-	private int sek; 
-	
-	// Pseudo-Zufallszahlengenerator
-	private Random zufall = new Random(System.currentTimeMillis());
+public class Erzeuger extends Akteur {
 	
 	// Default-Constructor: Keine Parameter, zufällige Wartezeit
 	public Erzeuger() {
-		sek = 1 + zufall.nextInt(20);
+		super("E");
 	}
+	// Constructor: Vorgegebener Name für Ausgabe
+	public Erzeuger(String s) {
+		super(s);
+	}	
 	// Construcor: Vorgegebene Wartezeit in Sekunden
+	// i == 0 : Jedes Mal eine andere zufällige Wartezeit
 	public Erzeuger(int i) {
-		sek = i;
+		super("E", i);
 	}
-
-	Queue queue = Queue.getInstance();	
-	
-	public void run() {
-		while (true) {
-			pizzeria.securityCam.log("E", queue.speicher.size());
-			try{queue.speicher.put(1);} catch(InterruptedException e) {};
-			try{Thread.sleep(sek*pizzeria.SLOW_DOWN);} catch(InterruptedException e) {};
-		}
+	// Constructor: Vorgegebene Wartezeit & Name
+	public Erzeuger(String s, int i) {
+		super(s, i);
+	}
+		
+	public void aktion() {
+		try{queue.speicher.put(1);} catch(InterruptedException e) {};
 	}
 }
+

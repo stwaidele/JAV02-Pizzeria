@@ -1,29 +1,24 @@
-import java.util.Random;
-
-public class Verbraucher extends Thread {
-	
-	// Wartezeit zwischen dem Abholen
-	private int sek; 
-	
-	// Pseudo-Zufallszahlengenerator
-	private Random zufall = new Random(System.currentTimeMillis());
+public class Verbraucher extends Akteur {
 	
 	// Default-Constructor: Keine Parameter, zufällige Wartezeit
 	public Verbraucher() {
-		sek = 1 + zufall.nextInt(20);
+		super("V");
 	}
+	// Constructor: Vorgegebener Name für Ausgabe
+	public Verbraucher(String s) {
+		super(s);
+	}	
 	// Construcor: Vorgegebene Wartezeit in Sekunden
+	// i == 0 : Jedes Mal eine andere zufällige Wartezeit
 	public Verbraucher(int i) {
-		sek = i;
+		super("V", i);
 	}
-	
-	Queue queue = Queue.getInstance();
-	
-	public void run() {
-		while (true) {
-			pizzeria.securityCam.log("V", queue.speicher.size());
+	// Constructor: Vorgegebene Wartezeit & Name
+	public Verbraucher(String s, int i) {
+		super(s, i);
+	}
+		
+	public void aktion() {
 			try { queue.speicher.take();} catch(InterruptedException e) {};
-			try { Thread.sleep(sek*pizzeria.SLOW_DOWN);} catch(InterruptedException e) {};
-		}
 	}
 }
