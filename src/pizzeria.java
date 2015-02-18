@@ -15,7 +15,7 @@ public class pizzeria {
 
 	public static void main(String[] args) {
 		int nv;
-		ArrayList <Verbraucher> v = new ArrayList<Verbraucher>();
+		ArrayList <Verbraucher> alleVerbraucher = new ArrayList<Verbraucher>();
 
 		Scanner s = new Scanner(System.in);
 		System.out.print("Wartezeit für Erzeuger? (0 für jedes Mal eine neue zufällige Wartezeit) ");
@@ -25,7 +25,7 @@ public class pizzeria {
 		nv = s.nextInt();
 		for (int i=1; i<=nv; i++) {
 			System.out.print("Wartezeit für Verbraucher " + i + "? (0 für jedes Mal eine neue zufällige Wartezeit) ");
-			v.add(new Verbraucher("V"+i, s.nextInt()));
+			alleVerbraucher.add(new Verbraucher("V"+i, s.nextInt()));
 		}				
 		s.close();
 		
@@ -35,10 +35,8 @@ public class pizzeria {
 		queue.setSpeichergroesse(QUEUE_SIZE);
 
 		e.start();
-		Iterator<Verbraucher> it = v.iterator();
-		while(it.hasNext()) {
-			it.next().start();
-		}
-		
+		for(Verbraucher verbraucher: alleVerbraucher) {
+			verbraucher.start();
+		}		
 	}
 }
