@@ -6,9 +6,11 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class Queue {
 	// Klassisches Singleton Entwurfsmuster
 	// vgl. GoF, Seite 127ff
-	// Java Implementierung z.B. http://www.javaworld.com/article/2073352/core-java/simply-singleton.html
+	// Java Implementierung z.B. 
+	// http://www.javaworld.com/article/2073352/core-java/simply-singleton.html
 	private static Queue instance = null;
-	public   LinkedBlockingQueue<Integer> speicher = new LinkedBlockingQueue<>();
+	public   LinkedBlockingQueue<Integer> speicher 
+	= new LinkedBlockingQueue<>();
 	
 	// Leerer, geschützter Constructor verhindert Instanziierung
 	protected Queue() {}
@@ -23,6 +25,7 @@ public class Queue {
 	public void setSpeichergroesse(int i) {
 		// Neue Queue mit gewünschter Größe erzeugen & referenzieren
 		speicher = new LinkedBlockingQueue<>(i);
-		// Die alte Queue wird nicht mehr referenziert und per Garbage Collection freigegeben,
+		// Die alte Queue wird nicht mehr referenziert 
+		// und per Garbage Collection freigegeben,
 	}
 }

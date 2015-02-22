@@ -1,6 +1,5 @@
 import java.util.Random;
 
-
 public abstract class Akteur extends Thread {
 	// Wartezeit zwischen dem Abholen
 	private int sek; 
@@ -9,26 +8,14 @@ public abstract class Akteur extends Thread {
 	
 	public Queue queue = Queue.getInstance();
 
-	
 	// Pseudo-Zufallszahlengenerator
 	private Random zufall = new Random(System.currentTimeMillis());
 	
-	// Default-Constructor: Keine Parameter, zufällige Wartezeit, Name "A" für Akteur
+	// Default-Constructor: Keine Parameter, zufällige Wartezeit, 
+	// Name "A" für Akteur
 	public Akteur() {
-		this("A");
-	}
-	// Construcor: Vorgegebene Wartezeit in Sekunden
-	// i == 0 : Jedes Mal eine andere zufällige Wartezeit
-	public Akteur(int i) {
-		sek = i;
-		if(i==0) {
-			immerZufall = true;
-		}
-	}
-	// Constructor: Vorgegebener Name
-	public Akteur(String s) {
-		sek = 1 + zufall.nextInt(pizzeria.MAX_RANDOM_WAIT-1);
-		meinName = s;
+		sek = 1 + zufall.nextInt(Pizzeria.MAX_RANDOM_WAIT-1);
+		meinName = "A";
 	}
 	// Constructor: Vorgegebene Wartezeit & Name
 	public Akteur(String s, int i) {
@@ -41,21 +28,23 @@ public abstract class Akteur extends Thread {
 	
 	public void run() {
 		while (true) {
-			// Falls jedes Mal zufällig gewartet werden soll:
-			// Wartezeit bestimmen...
-			if (immerZufall) {
-				sek = 1 + zufall.nextInt(pizzeria.MAX_RANDOM_WAIT-1);
-			}
-			// Warten...
-			try { Thread.sleep(sek*pizzeria.SLOW_DOWN);} catch(InterruptedException e) {};
 			// Loggen...
-			pizzeria.securityCam.log(meinName, sek, queue.speicher.size());
+			Pizzeria.logger.log(meinName, sek, queue.speicher.size());
 
 			// Handeln!
 			aktion();
+
+			//...warten... (bzw. satt sein, oder nächstes Element vorbereiten, ..)
+			// Falls jedes Mal zufällig gewartet werden soll:
+			// Wartezeit bestimmen...
+			if (immerZufall) {
+				sek = 1 + zufall.nextInt(Pizzeria.MAX_RANDOM_WAIT-1);
+			}
+			// Warten...
+			try { Thread.sleep(sek*Pizzeria.SLOW_DOWN);} 
+			catch (InterruptedException e) {};
 		}
 	}
 	
 	protected abstract void aktion();
-
 }
