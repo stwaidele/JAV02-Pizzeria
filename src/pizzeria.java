@@ -32,7 +32,7 @@ public class Pizzeria {
 		}				
 		s.close();
 		
-		logger.log("Pizzeria JAV02 hat geöffnet.");
+		System.out.print("Pizzeria JAV02 hat geöffnet.");
 
 		Queue queue = Queue.getInstance();
 		queue.setSpeichergroesse(QUEUE_SIZE);

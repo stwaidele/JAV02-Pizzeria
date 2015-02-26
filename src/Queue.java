@@ -1,6 +1,3 @@
-//
-// Queue: Implementierung einer Warteschlange
-//        Entuwrfmuster: Singleton
 import java.util.concurrent.LinkedBlockingQueue;
 
 public class Queue {
@@ -21,7 +18,7 @@ public class Queue {
 		}
 		return instance;
 	}	
-	// Möglichkeit die GGröße der Queue zu bestimmen/verändern
+	// Möglichkeit die Größe der Queue zu bestimmen/verändern
 	public void setSpeichergroesse(int i) {
 		// Neue Queue mit gewünschter Größe erzeugen & referenzieren
 		speicher = new LinkedBlockingQueue<>(i);
