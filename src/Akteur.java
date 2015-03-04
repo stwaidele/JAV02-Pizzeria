@@ -28,21 +28,22 @@ public abstract class Akteur extends Thread {
 	
 	public void run() {
 		while (true) {
+			// Wartezeit ermitteln... 
+			// Falls jedes Mal zufällig gewartet werden soll:
+			if (immerZufall) {
+				// Zufällige Wartezeit
+				sek = 1 + zufall.nextInt(Pizzeria.MAX_RANDOM_WAIT-1);
+			}
+			// Warten... (bzw. satt sein, oder nächstes Element vorbereiten, ..)
+			try { Thread.sleep(sek*Pizzeria.SLOW_DOWN);} 
+			catch (InterruptedException e) {};
+		
 			// Loggen...
 			Pizzeria.logger.log(meinName, sek, queue.speicher.size());
 
 			// Handeln!
 			aktion();
 
-			//...warten... (bzw. satt sein, oder nächstes Element vorbereiten, ..)
-			// Falls jedes Mal zufällig gewartet werden soll:
-			// Wartezeit bestimmen...
-			if (immerZufall) {
-				sek = 1 + zufall.nextInt(Pizzeria.MAX_RANDOM_WAIT-1);
-			}
-			// Warten...
-			try { Thread.sleep(sek*Pizzeria.SLOW_DOWN);} 
-			catch (InterruptedException e) {};
 		}
 	}
 	
